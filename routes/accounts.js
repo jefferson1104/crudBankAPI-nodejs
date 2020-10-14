@@ -5,6 +5,8 @@ const { readFile, writeFile } = fs;
 
 const router = express.Router();
 
+
+//metodo POST para cadastrar um conteudo
 router.post('/', async (req, res) => {
   try {
     let account = req.body;
@@ -22,6 +24,7 @@ router.post('/', async (req, res) => {
   
 });
 
+//metodo GET para listar todos os conteudos
 router.get('/', async (req, res) => {
   try {
     const data = JSON.parse(await readFile(global.fileName));
@@ -32,7 +35,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-
+//metodo GET com parametro para listar apenas um conteudo  de id especifico
 router.get('/:id', async (req, res) => {
   try {
     const data = JSON.parse(await readFile(global.fileName));
@@ -44,7 +47,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-
+//metodo DELETE para deletar um conteudo recebendo id como parametro
 router.delete('/:id', async (req, res) => {
   try {
     const data = JSON.parse(await readFile(global.fileName));
@@ -57,12 +60,42 @@ router.delete('/:id', async (req, res) => {
   } catch (err) {
     res.status(400).send({ error: err.message });
   }
-
-
-
-
-  
 });
 
+//o metodo PUT utilizamos quando queremos atualizar todo um conteudo
+router.put('/', async (req, res) => {
+  try {
+    const account = req.body;
+
+    const data = JSON.parse(await readFile(global.fileName));
+    const index = data.accounts.findIndex(a => a.id === account.id);
+
+    data.accounts[index] = account;
+
+    await writeFile(global.fileName, JSON.stringify(data));
+    
+    res.send(account);
+  } catch (err) {
+    res.status(400).send({ error: err.message });
+  }
+});
+
+//o metodo PATH utilizamos quando queremos apenas atualizar um valor parcial
+router.patch('/updateBalance', async (req, res) => {
+  try {
+    const account = req.body;
+
+    const data = JSON.parse(await readFile(global.fileName));
+    const index = data.accounts.findIndex(a => a.id === account.id);
+
+    data.accounts[index].balance = account.balance;
+
+    await writeFile(global.fileName, JSON.stringify(data));
+    
+    res.send(data.accounts[index]);
+  } catch (err) {
+    res.status(400).send({ error: err.message });
+  }
+});
 
 export default router;
