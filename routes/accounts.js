@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 //metodo POST para cadastrar um conteudo
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     let account = req.body;
     const data = JSON.parse(await readFile(global.fileName));
@@ -19,36 +19,36 @@ router.post('/', async (req, res) => {
 
     res.send(account);
   } catch (err) {
-    res.status(400).send({ error: err.message });
+    next(err);
   }
   
 });
 
 //metodo GET para listar todos os conteudos
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try {
     const data = JSON.parse(await readFile(global.fileName));
     delete data.nextId;
     res.send(data);
   } catch (err) {
-    res.status(400).send({ error: err.message });
+    next(err);
   }
 });
 
 //metodo GET com parametro para listar apenas um conteudo  de id especifico
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const data = JSON.parse(await readFile(global.fileName));
     const account = data.accounts.find(
       account => account.id ===  parseInt(req.params.id))
     res.send(account);
   } catch (err) {
-    res.status(400).send({ error: err.message });
+    next(err);
   }
 });
 
 //metodo DELETE para deletar um conteudo recebendo id como parametro
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     const data = JSON.parse(await readFile(global.fileName));
     data.accounts = data.accounts.filter(
@@ -58,12 +58,12 @@ router.delete('/:id', async (req, res) => {
 
     res.end();
   } catch (err) {
-    res.status(400).send({ error: err.message });
+    next(err);
   }
 });
 
 //o metodo PUT utilizamos quando queremos atualizar todo um conteudo
-router.put('/', async (req, res) => {
+router.put('/', async (req, res, next) => {
   try {
     const account = req.body;
 
@@ -76,12 +76,12 @@ router.put('/', async (req, res) => {
     
     res.send(account);
   } catch (err) {
-    res.status(400).send({ error: err.message });
+    next(err);
   }
 });
 
 //o metodo PATH utilizamos quando queremos apenas atualizar um valor parcial
-router.patch('/updateBalance', async (req, res) => {
+router.patch('/updateBalance', async (req, res, next) => {
   try {
     const account = req.body;
 
@@ -94,8 +94,15 @@ router.patch('/updateBalance', async (req, res) => {
     
     res.send(data.accounts[index]);
   } catch (err) {
-    res.status(400).send({ error: err.message });
+    next(err);
   }
+});
+
+
+//tratamento de erros generico para todos os endpoints  
+router.use((err, req, res, next) => {
+  console.log(err);
+  res.status(400).send({ error: err.message });
 });
 
 export default router;
