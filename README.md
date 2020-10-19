@@ -24,6 +24,31 @@
 	
 </p>
 
-_________
 
+### 🤔 Mas o que é isso? 
+Uma api feita com nodeJS que simula transacoes bancarias, com esta api e possivel criar, listar, atualizar e deletar dados, a criacao desta api foi para feitos de estudos, porem sua base pode ser reaproveitada em diversos projetos, utilizamos muitos conceitos que deixam a api muito bem construida, na api fizemos o criacao de logs, validacao de campos e documentacao com swagger.
 
+### ✨ Técnologias do projeto:
+<ul>
+  <li>Javascript</li>
+  <li>NodeJS</li>
+  <li>ExpressJS</li>
+  <li>winston</li>
+  <li>swagger-ui-express</li>    
+</ul>
+
+### :cyclone: Como executar este projeto
+```bash
+# Clone este repositório
+$ git clone https://github.com/jefferson1104/mybankAPI.git
+
+# Acesse a pasta do projeto no terminal/cmd
+$ cd my-bank-api
+
+# instale os modulos utilizando o gerenciador de pacotes yarn ou npm
+$ yarn 
+$ npm
+
+# Inicie a api com o nodemon 
+$ nodemon index.js
+```
