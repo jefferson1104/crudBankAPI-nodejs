@@ -1,0 +1,9 @@
+2021-10-27T16:21:12.627Z [my-bank-api] info: API Started and file created.
+2021-10-27T16:23:35.570Z [my-bank-api] info: GET /account
+2021-10-27T16:24:28.599Z [my-bank-api] info: GET /account
+2021-10-27T16:26:28.021Z [my-bank-api] info: GET /account/:id
+2021-10-27T16:29:34.749Z [my-bank-api] info: API Started
+2021-10-27T16:30:45.019Z [my-bank-api] info: GET /account
+2021-10-27T16:31:06.052Z [my-bank-api] info: GET /account
+2021-10-27T16:31:06.857Z [my-bank-api] info: GET /account
+2021-10-27T16:31:25.370Z [my-bank-api] info: GET /account
